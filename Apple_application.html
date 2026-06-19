@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mistakes: The Life Lessons — Hyunbeen Suk</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #f7f4ef;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .book-wrap {
+    width: 100%;
+    max-width: 860px;
+  }
+
+  .spread {
+    display: none;
+    width: 100%;
+    min-height: 520px;
+    border: 0.5px solid #c8c2b8;
+    border-radius: 4px;
+    overflow: hidden;
+    animation: fadeIn 0.45s ease;
+    background: #fff;
+  }
+
+  .spread.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .left-page {
+    width: 44%;
+    min-height: 520px;
+    background: #e8e3db;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 0.5px solid #c8c2b8;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .left-page img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .img-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    min-height: 520px;
+    color: #a09890;
+    font-family: Georgia, serif;
+  }
+
+  .img-placeholder i { font-size: 36px; }
+
+  .img-placeholder p {
+    font-size: 12px;
+    text-align: center;
+    padding: 0 1.5rem;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .right-page {
+    width: 56%;
+    padding: 2.5rem 2.25rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+
+  .page-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #b0a898;
+    font-family: Georgia, serif;
+    margin-bottom: 1.25rem;
+  }
+
+  .page-title {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: #1a1714;
+    line-height: 1.35;
+    margin-bottom: 1.25rem;
+  }
+
+  .page-body {
+    font-family: Georgia, serif;
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: #3a3530;
+    flex: 1;
+  }
+
+  .page-body p + p { margin-top: 0.85rem; }
+
+  .strong { font-weight: bold; color: #1a1714; }
+
+  .cover-left {
+    background: #1a1714;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 2.5rem;
+  }
+
+  .cover-left-title {
+    font-family: Georgia, serif;
+    font-size: 28px;
+    font-weight: normal;
+    color: #f7f4ef;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-left-sub {
+    font-size: 12px;
+    color: #8a8078;
+    font-style: italic;
+    font-family: Georgia, serif;
+  }
+
+  .cover-right {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.5rem 2.25rem;
+  }
+
+  .cover-meta {
+    font-size: 12px;
+    color: #7a7068;
+    font-family: Georgia, serif;
+    line-height: 2;
+  }
+
+  .cover-program {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #b0a898;
+    font-family: Georgia, serif;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 0.5px solid #e0dbd4;
+  }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #7a7068;
+    background: none;
+    border: 0.5px solid #c8c2b8;
+    border-radius: 3px;
+    padding: 5px 14px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    transition: all 0.15s;
+  }
+
+  .nav-btn:hover { background: #f7f4ef; color: #1a1714; }
+  .nav-btn:disabled { opacity: 0.28; cursor: default; pointer-events: none; }
+
+  .dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #c8c2b8;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .dot.active { background: #1a1714; }
+
+  .page-num {
+    font-size: 11px;
+    color: #b0a898;
+    font-family: Georgia, serif;
+    text-align: right;
+    margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="book-wrap">
+
+  <!-- COVER -->
+  <div class="spread active" id="spread-0">
+    <div class="left-page cover-left" style="width:44%; min-height:520px; justify-content:flex-end; padding:2.5rem;">
+      <div class="cover-left-title">Mistakes:<br>The Life<br>Lessons</div>
+      <div class="cover-left-sub" style="margin-top:0.5rem;">A personal reflection</div>
+    </div>
+    <div class="right-page cover-right">
+      <div class="cover-program">Apple Foundation Program</div>
+      <div>
+        <div class="cover-meta">
+          Hyunbeen Suk<br>
+          Student ID: 14655765<br>
+          University of Technology Sydney
+        </div>
+      </div>
+      <div class="nav">
+        <button class="nav-btn" disabled><i class="ti ti-arrow-left"></i> Prev</button>
+        <div class="dots" id="dots-0"></div>
+        <button class="nav-btn" onclick="goTo(1)">Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 1 -->
+  <div class="spread" id="spread-1">
+    <div class="left-page">
+      <div class="img-placeholder">
+        <img src="https://i.imgur.com/v0gjKAa.png" alt="page 1 illustration">
+      </div>
+    </div>
+    <div class="right-page">
+      <div class="page-label">Page 1 — The Mistake</div>
+      <div class="page-title">A mistake repeated becomes a habit</div>
+      <div class="page-body">
+        <p>Everyone makes mistakes. At least, that's what people say. However, I am starting to believe that when you make the same mistake often enough, it stops being a mistake at all — <span class="strong">and just becomes your personality.</span></p>
+        <p>When I was supposed to reflect on the biggest mistake I made in my life, I had to think about it for quite a while. There were numerous situations in which I made mistakes in the past. But there was one situation that was different from the others — unique not only because of one single instance, but because I did it many times and kept doing it again and again.</p>
+        <p>I haven't given my best. I've done so in rare cases. But most often I've made excuses and haven't given my best when it could really matter. And each time something new came to me, I was not ready for it — and thus saw how this new chance slipped away without even trying, because I kept telling myself it was not meant to happen to me.</p>
+        <p>Only later did I realize that luck had nothing to do with it.</p>
+      </div>
+      <div class="nav">
+        <button class="nav-btn" onclick="goTo(0)"><i class="ti ti-arrow-left"></i> Prev</button>
+        <div class="dots" id="dots-1"></div>
+        <button class="nav-btn" onclick="goTo(2)">Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="page-num">1</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="spread" id="spread-2">
+    <div class="left-page">
+      <div class="img-placeholder">
+        <img src="https://i.imgur.com/4sCBnKt.png" alt="page 2 illustration">
+      </div>
+    </div>
+    <div class="right-page">
+      <div class="page-label">Page 2 — Significant Mistake</div>
+      <div class="page-title">A gift I chose not to keep</div>
+      <div class="page-body">
+        <p>I was the best in my math academy. As our family faced financial problems and we couldn't afford the tuition, I went to my teacher explaining that I would be unable to continue. What he said after that surprised me.</p>
+        <p>He said it would be a waste not to keep me. If I worked hard and maintained good grades, <span class="strong">he would waive all the payments.</span> I wouldn't pay anything. I remember being touched by his words — grateful in a way I had rarely been at that age.</p>
+        <p>But soon it changed. Gradually, without even realizing it, I started to skip my homework, my classes. I convinced myself that I was smart enough — that I didn't have to work as hard as others. He warned me once. And again. After each warning I straightened up for only a few days before dropping back into old habits.</p>
+        <p>In the end, he took the offer back. He did not make any fuss about it — he simply stopped showing me the same mercy as before. And there I stood, realizing there was no one to blame. <span class="strong">By then, it was no longer a mistake. It had become who I was.</span></p>
+      </div>
+      <div class="nav">
+        <button class="nav-btn" onclick="goTo(1)"><i class="ti ti-arrow-left"></i> Prev</button>
+        <div class="dots" id="dots-2"></div>
+        <button class="nav-btn" onclick="goTo(3)">Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="page-num">2</div>
+    </div>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="spread" id="spread-3">
+    <div class="left-page">
+      <div class="img-placeholder">
+        <img src="https://i.imgur.com/CuUP7mV.png" alt="page 3 illustration">
+      </div>
+    </div>
+    <div class="right-page">
+      <div class="page-label">Page 3 — Significant Mistake</div>
+      <div class="page-title">Another door. The same choice.</div>
+      <div class="page-body">
+        <p>On one occasion during my high school years, I managed to go and live in the United States in my aunt's family house for some time. Everything about being there was alien at first. The language was strange; the culture was unfamiliar; there was nothing familiar about it. But somehow, I persevered through all of it.</p>
+        <p>It took some time but slowly I got used to my surroundings. I adapted to school life and managed to make some friends there. I felt like I finally had a place in the world.</p>
+        <p>But after a while, just like before, I stopped appreciating what I had. Being fascinated with video games became a priority. I skipped school often and failed to meet expectations that I had no right to ignore. We started arguing a lot and she eventually asked me to leave because I wasn't fitting in there anymore.</p>
+        <p>When I returned home earlier than expected, a feeling of discomfort stayed with me because this time, too, <span class="strong">it wasn't just bad luck. It seemed like I had done it once again.</span></p>
+      </div>
+      <div class="nav">
+        <button class="nav-btn" onclick="goTo(2)"><i class="ti ti-arrow-left"></i> Prev</button>
+        <div class="dots" id="dots-3"></div>
+        <button class="nav-btn" onclick="goTo(4)">Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="page-num">3</div>
+    </div>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div class="spread" id="spread-4">
+    <div class="left-page">
+      <div class="img-placeholder">
+        <img src="https://i.imgur.com/BmQ2HXi.png" alt="page 4 illustration">
+      </div>
+    </div>
+    <div class="right-page">
+      <div class="page-label">Page 4 — The Reckoning</div>
+      <div class="page-title">It was never about luck</div>
+      <div class="page-body">
+        <p>For years, I told myself that I was just unfortunate. That somehow, opportunities always managed to find themselves around other people — people who were better in time, in connections, in their luck. But the repetition of the same story became too much to keep ignoring.</p>
+        <p>What if I had studied hard during the period when my teacher decided to help me — what would that have brought? What if I had not betrayed the faith my aunt placed in me — how different might America have been? The reality was harsh: <span class="strong">I was never unfortunate. I was unprepared. Every single time, I kicked the doors shut and blamed it all on the wind.</span></p>
+        <p>And so the time came when I decided to take the risk. To leave my old life and begin anew in Australia, alone. It wouldn't be easy — but I also knew very well that the person who had lost every opportunity before was someone I could no longer recognize. And so I let all my past mistakes remind me of who I refused to be.</p>
+      </div>
+      <div class="nav">
+        <button class="nav-btn" onclick="goTo(3)"><i class="ti ti-arrow-left"></i> Prev</button>
+        <div class="dots" id="dots-4"></div>
+        <button class="nav-btn" onclick="goTo(5)">Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="page-num">4</div>
+    </div>
+  </div>
+
+  <!-- PAGE 5 -->
+  <div class="spread" id="spread-5">
+    <div class="left-page">
+      <div class="img-placeholder">
+        <img src="https://i.imgur.com/qQhnjIo.png" alt="page 5 illustration">
+      </div>
+    </div>
+    <div class="right-page">
+      <div class="page-label">Page 5 — The Recovery</div>
+      <div class="page-title">This time, I didn't let go</div>
+      <div class="page-body">
+        <p>Right from the start, life in Australia challenged me. The moment I arrived, there were problems in the family concerning finances. All the help I had counted on suddenly vanished. I could easily have taken that as a sign to stop and walk away — but the old me would have done just that.</p>
+        <p>Instead, I thought about my math teacher — and how I had taken his support for granted through sheer laziness. So when I found out that doing well academically would earn me a scholarship, I did not waste any time. I worked harder than I ever had and ended up with a GPA of 6.8 out of 7.0. <span class="strong">The scholarship came through.</span></p>
+        <p>The financial strain persisted. During the holidays I worked full days. In term-time, I worked every day I wasn't in class. I recalled being sent home from America — not because of a lack of opportunity, but because I had failed to appreciate what I had. I refused to let that happen again. I studied in every hour that wasn't claimed by work.</p>
+        <p>When the semester ended, I had paid for my own tuition and living costs without asking my family for a single won. And every subject I studied that semester — <span class="strong">I received an HD.</span></p>
+      </div>
+      <div class="nav">
+        <button class="nav-btn" onclick="goTo(4)"><i class="ti ti-arrow-left"></i> Prev</button>
+        <div class="dots" id="dots-5"></div>
+        <button class="nav-btn" onclick="goTo(6)">Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="page-num">5</div>
+    </div>
+  </div>
+
+  <!-- PAGE 6 -->
+  <div class="spread" id="spread-6">
+    <div class="left-page">
+      <div class="img-placeholder">
+        <img src="https://i.imgur.com/JIGPCjO.png" alt="page 6 illustration">
+      </div>
+    </div>
+    <div class="right-page">
+      <div class="page-label">Page 6 — Next Chapter</div>
+      <div class="page-title">Ready this time</div>
+      <div class="page-body">
+        <p>In my experience, mistakes are merely wasted opportunities if one does not make an effort to learn from them. The math class, my aunt's house, those lost years of complacency — none of it was wasted, because all of it shaped who I am now.</p>
+        <p>There is a perception that growth is something that happens to us. In my experience, it is something one must consciously choose, repeatedly — especially during those times when it would be simpler not to. The person who works all day and then studies through the night. The person who doesn't call home requesting money. The person who earns their grades at the end of the semester. <span class="strong">That is the person I strove to become.</span></p>
+        <p>I first heard about the Apple Foundation Program through the friends and people I met by throwing myself into university life — the same people I never would have found if I had kept coasting the way I used to. That alone felt like proof that something had changed.</p>
+        <p>The program itself could not be a better fit. It sits directly at the intersection of what I study and what I care about — AI is the field I chose to rebuild my life around, and Apple is a company I have long admired and followed closely. Joining this program would push me further and faster than anything I could do alone.</p>
+        <p>I know how it feels to stand on the other side of a door I closed with my own hands. <span class="strong">This mistake will never happen to me again.</span></p>
+      </div>
+      <div class="nav">
+        <button class="nav-btn" onclick="goTo(5)"><i class="ti ti-arrow-left"></i> Prev</button>
+        <div class="dots" id="dots-6"></div>
+        <button class="nav-btn" disabled>Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="page-num">6</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 7;
+  let current = 0;
+
+  function renderDots() {
+    for (let p = 0; p < TOTAL; p++) {
+      const container = document.getElementById('dots-' + p);
+      if (!container) continue;
+      container.innerHTML = '';
+      for (let i = 0; i < TOTAL; i++) {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i === current ? ' active' : '');
+        const target = i;
+        d.onclick = () => goTo(target);
+        container.appendChild(d);
+      }
+    }
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= TOTAL) return;
+    document.getElementById('spread-' + current).classList.remove('active');
+    current = n;
+    document.getElementById('spread-' + current).classList.add('active');
+    renderDots();
+  }
+
+  renderDots();
+</script>
+</body>
+</html>
